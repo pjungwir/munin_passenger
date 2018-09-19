@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'munin_passenger'
+
+if ARGV[0] == 'config'
+  puts MuninPassenger::Graphs.last_used_config
+else
+  puts MuninPassenger::Graphs.last_used_values
+end

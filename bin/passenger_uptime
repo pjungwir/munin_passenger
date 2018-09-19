@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'munin_passenger'
+
+if ARGV[0] == 'config'
+  puts MuninPassenger::Graphs.uptime_config
+else
+  puts MuninPassenger::Graphs.uptime_values
+end

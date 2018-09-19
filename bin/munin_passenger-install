@@ -1,0 +1,10 @@
+#/usr/bin/env ruby
+
+# This has to be a Ruby script, not a shell script!
+# See https://stackoverflow.com/questions/23701726/deploy-a-shell-script-with-ruby-gem-and-install-in-bin-directory
+
+bin_dir = File.expand_path(File.dirname(__FILE__))
+shell_script_path = File.join(bin_dir, 'munin_passenger-install.sh')
+
+# Have to make sure it runs bash, not dash or sh:
+system("bash", shell_script_path, *ARGV)

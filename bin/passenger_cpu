@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'munin_passenger'
+
+if ARGV[0] == 'config'
+  puts MuninPassenger::Graphs.cpu_config
+else
+  puts MuninPassenger::Graphs.cpu_values
+end
