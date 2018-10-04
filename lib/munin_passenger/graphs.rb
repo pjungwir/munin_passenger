@@ -30,9 +30,10 @@ graph_vlabel Requests
 _group_#{escape_group(g.name)}_queue.label #{g.name}
         EOF
       end
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        pidstr = ps ? "(PID #{ps.pid})" : "(no PID)"
         ret += <<-EOF
-_pid_#{ps.pid}_sessions.label PID #{ps.pid}
+_worker_#{i + 1}_sessions.label Worker #{i + 1} #{pidstr}
         EOF
       end
       ret
@@ -46,9 +47,10 @@ _pid_#{ps.pid}_sessions.label PID #{ps.pid}
 _group_#{escape_group(g.name)}_queue.value #{g.queue}
     EOF
       end
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        next unless ps
         ret += <<-EOF
-_pid_#{ps.pid}_sessions.value #{ps.sessions}
+_worker_#{i + 1}_sessions.value #{ps.sessions}
         EOF
       end
       ret
@@ -66,9 +68,10 @@ graph_category passenger
 graph_title Passenger memory usage
 graph_vlabel Bytes
       EOF
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        pidstr = ps ? "(PID #{ps.pid})" : "(no PID)"
         ret += <<-EOF
-_pid_#{ps.pid}_ram.label PID #{ps.pid}
+_worker_#{i + 1}_ram.label Worker #{i + 1} #{pidstr}
         EOF
       end
       ret
@@ -77,9 +80,10 @@ _pid_#{ps.pid}_ram.label PID #{ps.pid}
     def self.ram_values
       groups, pses = get_stats
       ret = ''
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        next unless ps
         ret += <<-EOF
-_pid_#{ps.pid}_ram.value #{ps.ram * 1024}
+_worker_#{i + 1}_ram.value #{ps.ram * 1024}
         EOF
       end
       ret
@@ -97,9 +101,10 @@ graph_category passenger
 graph_title Passenger CPU
 graph_vlabel %
       EOF
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        pidstr = ps ? "(PID #{ps.pid})" : "(no PID)"
         ret += <<-EOF
-_pid_#{ps.pid}_cpu.label PID #{ps.pid}
+_worker_#{i + 1}_cpu.label Worker #{i + 1} #{pidstr}
         EOF
       end
       ret
@@ -108,9 +113,10 @@ _pid_#{ps.pid}_cpu.label PID #{ps.pid}
     def self.cpu_values
       groups, pses = get_stats
       ret = ''
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        next unless ps
         ret += <<-EOF
-_pid_#{ps.pid}_cpu.value #{ps.cpu}
+_worker_#{i + 1}_cpu.value #{ps.cpu}
         EOF
       end
       ret
@@ -128,9 +134,10 @@ graph_category passenger
 graph_title Requests processed
 graph_vlabel Requests
       EOF
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        pidstr = ps ? "(PID #{ps.pid})" : "(no PID)"
         ret += <<-EOF
-_pid_#{ps.pid}_processed.label PID #{ps.pid}
+_worker_#{i + 1}_processed.label Worker #{i + 1} #{pidstr}
         EOF
       end
       ret
@@ -139,9 +146,10 @@ _pid_#{ps.pid}_processed.label PID #{ps.pid}
     def self.processed_values
       groups, pses = get_stats
       ret = ''
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        next unless ps
         ret += <<-EOF
-_pid_#{ps.pid}_processed.value #{ps.processed}
+_worker_#{i + 1}_processed.value #{ps.processed}
         EOF
       end
       ret
@@ -159,9 +167,10 @@ graph_category passenger
 graph_title Uptime
 graph_vlabel Hours
       EOF
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        pidstr = ps ? "(PID #{ps.pid})" : "(no PID)"
         ret += <<-EOF
-_pid_#{ps.pid}_uptime.label PID #{ps.pid}
+_worker_#{i + 1}_uptime.label Worker #{i + 1} #{pidstr}
         EOF
       end
       ret
@@ -170,9 +179,10 @@ _pid_#{ps.pid}_uptime.label PID #{ps.pid}
     def self.uptime_values
       groups, pses = get_stats
       ret = ''
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        next unless ps
         ret += <<-EOF
-_pid_#{ps.pid}_uptime.value #{ps.uptime.to_f / 60 / 60}
+_worker_#{i + 1}_uptime.value #{ps.uptime.to_f / 60 / 60}
         EOF
       end
       ret
@@ -190,9 +200,10 @@ graph_category passenger
 graph_title Last used
 graph_vlabel Seconds
       EOF
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        pidstr = ps ? "(PID #{ps.pid})" : "(no PID)"
         ret += <<-EOF
-_pid_#{ps.pid}_last_used.label PID #{ps.pid}
+_worker_#{i + 1}_last_used.label Worker #{i + 1} #{pidstr}
         EOF
       end
       ret
@@ -201,9 +212,10 @@ _pid_#{ps.pid}_last_used.label PID #{ps.pid}
     def self.last_used_values
       groups, pses = get_stats
       ret = ''
-      pses.each do |ps|
+      pses.each_with_index do |ps, i|
+        next unless ps
         ret += <<-EOF
-_pid_#{ps.pid}_last_used.value #{ps.last_used}
+_worker_#{i + 1}_last_used.value #{ps.last_used}
         EOF
       end
       ret

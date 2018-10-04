@@ -129,7 +129,7 @@ server {
 }
 EOF
 sudo rm -f /etc/nginx/sites-enabled/default
-sudo ln -s /etc/nginx/sites-available/rails /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/rails /etc/nginx/sites-enabled/
 
 # munin
 sudo add-apt-repository -y ppa:hawq/munin
@@ -141,7 +141,7 @@ server {
   root /var/cache/munin/www;
 }
 EOF
-sudo ln -s /etc/nginx/sites-available/munin /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/munin /etc/nginx/sites-enabled/
 
 # postgres
 sudo apt-get install -y postgresql postgresql-contrib
